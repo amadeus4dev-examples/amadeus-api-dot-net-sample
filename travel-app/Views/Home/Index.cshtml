@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (ViewBag?.Results != null)
+{
+    <h2>Busiest Months:</h2>
+    <ul>
+        @foreach (var item in ViewBag.Results.data)
+        {
+            <li>@item.type for period of @item.period with a score of @item.score</li>
+        }
+    </ul>
+
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.0/chart.min.js"></script>
+    <script>
+    const labels = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        "Oct",
+        "Nov",
+        "Dec"
+    ];
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Busiest Months',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [@ViewBag.Results.graphArray],
+        }]
+    };
+
+    const config = {
+        type: 'line',
+        data,
+        options: {}
+    };
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+</script>
+}
